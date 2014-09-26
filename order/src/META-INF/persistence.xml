@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+<!--  -->
+<persistence-unit name="myJPAUnit" transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:/myJPAUnitDS</jta-data-source>
+		<class>com.enterprise.core.data.PersistentEntity</class>
+		<properties>
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />  
+					
+		</properties>
+</persistence-unit>
+
+
+<!--	The value of this property is used to control the genration of DB
+				tables
+				http://stackoverflow.com/questions/438146/hibernate-question-hbm2ddl-auto-possible-values-and-what-they-do
+-->
+ 				
+ <!--<persistence-unit name="RequisitionPU"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+ 		<class>eu.cec.digit.apps.meta.data.document.ContactPersonDetail</class>
+ 		<class>eu.cec.digit.apps.meta.data.document.Attachment</class>
+ 		<class>eu.cec.digit.apps.meta.data.document.AttachmentBinary</class>
+ 		<class>eu.cec.digit.apps.meta.data.document.Context</class>
+ 		<class>eu.cec.digit.apps.meta.data.document.Item</class>
+ 		<class>eu.cec.digit.apps.meta.data.MetaData</class>
+ 		
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres" />
+			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
+			<property name="hibernate.connection.username" value="requisition" />
+			<property name="hibernate.connection.password" value="requisition" />
+			
+			
+			
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+
+		</properties>
+		
+		
+	</persistence-unit> 
+ 
+-->
+ 
+<!-- 
+<persistence-unit name="RequisitionPU"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>eu.cec.digit.apps.meta.data.MetaData</class>
+ 		<class>eu.cec.digit.apps.meta.data.document.ContactPersonDetail</class>
+ 		<class>eu.cec.digit.apps.meta.data.document.Attachment</class>
+ 		<class>eu.cec.digit.apps.meta.data.document.AttachmentBinary</class>
+ 		<class>eu.cec.digit.apps.meta.data.document.Context</class>
+ 		<class>eu.cec.digit.apps.meta.data.document.Item</class>
+ 		
+ 	 		
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@devora2.cc.cec.eu.int:1546:IN1UDIGD" />
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="hibernate.connection.username" value="REQUISITION" />
+			<property name="hibernate.connection.password" value="req2010_d" />
+			
+			
+			
+			<property name="hibernate.hbm2ddl.auto" value="none" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+
+		</properties>
+		
+		
+	</persistence-unit> 
+ -->
+
+<!-- SPRING INTEGRATION	
+	<persistence-unit name="erequest" transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>jdbc/ERequestDS</jta-data-source>
+		
+		<properties>
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.Oracle10gDialect" />
+		
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />  
+			
+			<property name="hibernate.transaction.manager_lookup_class"
+				value="org.hibernate.transaction.WeblogicTransactionManagerLookup" />
+				
+			       	
+         
+			 <property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.SingletonEhCacheProvider"/>
+			 <property name="hibernate.cache.provider_configuration" value="/ehcache.xml" />
+			<property name="hibernate.cache.use_query_cache" value="true"/>
+			<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.generate_statistics" value="false"/>	
+		</properties>
+	</persistence-unit>
+	-->
+</persistence>
