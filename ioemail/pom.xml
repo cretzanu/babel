@@ -38,16 +38,6 @@
 
 		<plugins>
 			<plugin>
-				<artifactId>maven-ejb-plugin</artifactId>
-				<configuration>
-					<ejbVersion>3.0</ejbVersion>
-					<generateClient>false</generateClient>
-					<clientExcludes>
-						<clientExclude>**/*.xml</clientExclude>
-					</clientExcludes>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.6</source>
@@ -72,34 +62,7 @@
 		</dependency>
 
 
-		<!-- annotations for JSON serialization -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.9</version>
-		</dependency>
-
-
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.4.0.GA</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>xml-apis</artifactId>
-					<groupId>xml-apis</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache-core</artifactId>
-			<version>2.0.1</version>
-			<scope>compile</scope>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -113,46 +76,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>jsr250-api</artifactId>
-			<version>1.0</version>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.1</version>
 		</dependency>
-		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>ejb-api</artifactId>
-			<version>3.0</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- common REST functionality dependencies -->
-
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>1.13</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-servlet</artifactId>
-			<version>1.13</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>1.13</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
-			<version>1.13</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
+		
 
 	</dependencies>
 </project>
