@@ -14,7 +14,7 @@ public class CreateCSVOrderImpl implements CreateCSVOrder {
 	private CreateOrder createOrderDelegate;
 
 	public CreateCSVOrderImpl(CreateOrder delegate) {
-		createOrderDelegate=delegate;
+		createOrderDelegate = delegate;
 
 	}
 
@@ -28,39 +28,47 @@ public class CreateCSVOrderImpl implements CreateCSVOrder {
 	 *            - expecting CSV String implementing the CreateOrder from CSV
 	 *            protocol
 	 */
-	public void createCSVOrder(String p) {
-		Order order=new Order();
-		try{
-		String[] lines = p.split("\n");
-		//first line should contain customer's name
-		order.setCustomerName(lines[0]);
-		//second line should contain the email address
-		order.setCustomerEmail(lines[1]);
-		//third line should contain the delivery address
-		order.setDeliveryAddress(lines[2]);
-		//next lines should contain the items
-		OrderLine l=null;
-		String[] line=null;
-		for (int i=3; i<lines.length; i++){
-			line=lines[i].split(", ");
-			l=new OrderLine();
-			l.setItem(line[0]);
-			l.setQuantity(Double.valueOf(line[1]));
-			l.setPrice(Double.valueOf(line[2]));
-			order.addOrderLine(l);
-		}
-		}catch(Throwable t){
+	public String createCSVOrder(String p) {
+		Order order = new Order();
+		try {
+			String[] lines = p.split("\n");
+			// first line should contain customer's name
+			order.setCustomerName(lines[0]);
+			// second line should contain the email address
+			order.setCustomerEmail(lines[1]);
+			// third line should contain the delivery address
+			order.setDeliveryAddress(lines[2]);
+			// next lines should contain the items
+			OrderLine l = null;
+			String[] line = null;
+			for (int i = 3; i < lines.length; i++) {
+				line = lines[i].split(", ");
+				l = new OrderLine();
+				l.setItem(line[0]);
+				l.setQuantity(Double.valueOf(line[1]));
+				l.setPrice(Double.valueOf(line[2]));
+				order.addOrderLine(l);
+			}
+		} catch (Throwable t) {
 			t.printStackTrace();
-			throw new RuntimeException ("Invalid format! "+t.getMessage()); 
+			throw new RuntimeException(
+					"Error! Code 400 - Bad Request:Invalid format! "
+							+ t.getMessage());
+
 		}
-		
-		try{
-			this.getCreateOrderDelegate().createOrder(order);
-		}catch(Throwable t){
+
+		try {
+			Order nOrder = this.getCreateOrderDelegate().createOrder(order);
+			// If everything ok return some unique reference for future
+			// identification of the new order.
+			// Just for this simple test, we return the id, though not really
+			// recommended in real life situations.
+			return nOrder.getId().toString();
+		} catch (Throwable t) {
 			t.printStackTrace();
-			throw new RuntimeException ("Internal Server Error ");
+			throw new RuntimeException("Error! Code 500: Internal Server Error! ");
 		}
-		
+
 	}
 
 	public CreateOrder getCreateOrderDelegate() {
@@ -70,6 +78,5 @@ public class CreateCSVOrderImpl implements CreateCSVOrder {
 	public void setCreateOrderDelegate(CreateOrder createOrderDelegate) {
 		this.createOrderDelegate = createOrderDelegate;
 	}
-	
-	
+
 }// end CreateCSVOrderImpl

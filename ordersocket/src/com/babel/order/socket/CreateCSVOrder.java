@@ -11,6 +11,6 @@ public interface CreateCSVOrder {
 	 * 
 	 * @param p
 	 */
-	public void createCSVOrder(String p);
+	public String createCSVOrder(String p);
 
 }
