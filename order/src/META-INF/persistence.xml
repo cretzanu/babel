@@ -4,7 +4,7 @@
 <persistence-unit name="myJPAUnit" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/myJPAUnitDS</jta-data-source>
-		<class>com.enterprise.core.data.PersistentEntity</class>
+		<class>com.babel.core.data.PersistentEntity</class>
 		<properties>
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.Oracle10gDialect" />

@@ -5,7 +5,7 @@ import javax.persistence.ManyToOne;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
 
-import com.enterprise.core.data.PersistentEntity;
+import com.babel.core.data.PersistentEntity;
 
 /**
  * @author liviu.cretu

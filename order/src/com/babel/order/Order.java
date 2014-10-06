@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
-import com.enterprise.core.data.PersistentEntity;
+import com.babel.core.data.PersistentEntity;
 
 /**
  * @author liviu.cretu

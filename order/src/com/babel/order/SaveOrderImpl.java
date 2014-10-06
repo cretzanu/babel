@@ -1,6 +1,6 @@
 package com.babel.order;
 
-import com.enterprise.core.function.crud.UpdateImpl;
+import com.babel.core.function.crud.UpdateImpl;
 
 /**
  * @author liviu.cretu

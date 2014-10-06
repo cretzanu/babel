@@ -1,6 +1,6 @@
 package com.babel.order;
 
-import com.enterprise.core.function.crud.ReadByIdImpl;
+import com.babel.core.function.crud.ReadByIdImpl;
 
 /**
  * @author liviu.cretu
