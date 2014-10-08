@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.babel</groupId>
+	<artifactId>orderEAR</artifactId>
+	<version>1.0</version>
+	<packaging>ear</packaging>
+	<name>Order Application</name>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>test</testSourceDirectory>
+
+		<resources>
+			<resource>
+				<directory>resources</directory>
+				<filtering>true</filtering>
+			</resource>
+
+			<resource>
+				<directory>src</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>test</directory>
+				<targetPath>../test-classes</targetPath>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+
+		</resources>
+
+		<plugins>
+			<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-ear-plugin</artifactId>
+        <version>2.3.2</version>
+        <!-- configuring the ear plugin -->
+        <configuration>
+        <!-- EAR file name should not contain version number. Duplicate EJB names in the app server are not allowed -->
+        <finalName>order-ear</finalName>
+          <modules>
+           <!--  <webModule>
+>                         <groupId>com.blah</groupId>
+>                         <artifactId>MyApp.Web</artifactId>
+>                         <contextRoot>MyApp</contextRoot>
+>                     </webModule> -->
+            <ejbModule>
+              <groupId>com.babel</groupId>
+              <artifactId>orderejb</artifactId>
+            </ejbModule>
+            <jarModule>
+              <groupId>com.babel</groupId>
+              <artifactId>order</artifactId>
+              <includeInApplicationXml>true</includeInApplicationXml>
+            </jarModule>
+            <jarModule>
+              <groupId>com.babel.core</groupId>
+              <artifactId>babel-core</artifactId>
+              <includeInApplicationXml>true</includeInApplicationXml>
+            </jarModule>
+            <!--more on this http://antoniogoncalves.org/2009/10/23/because-i-always-forget-how-to-use-maven-ear-plugin/ --> 
+           
+          </modules>
+        </configuration>
+      </plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+
+		  <dependency>
+			<groupId>com.babel</groupId>
+			<artifactId>orderejb</artifactId>
+			<version>1.0</version>
+			<type>ejb</type>
+		</dependency>
+
+	
+		
+	</dependencies>
+</project>

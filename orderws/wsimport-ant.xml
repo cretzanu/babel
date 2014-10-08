@@ -1,0 +1,14 @@
+<project default="wsimport">
+
+  <target name="wsimport">
+    	
+    <exec executable="C:/Program Files/Java/jdk1.7.0_51//bin/wsimport">
+    		
+      <arg line="-keep -s ./test -p com.babel.order.test.ws.port 
+          -d ./target http://localhost:8080/order-ws/Order?wsdl"/>
+    		
+    </exec>
+    	
+  </target>
+
+</project>

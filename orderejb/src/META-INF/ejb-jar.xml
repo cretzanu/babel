@@ -1,0 +1,43 @@
+<ejb-jar xmlns = "http://java.sun.com/xml/ns/javaee" 
+         version = "3.0" 
+         xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation = "http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+    <interceptors>
+        
+        <interceptor>
+            <interceptor-class>com.babel.interceptor.TimeLogger</interceptor-class>
+        </interceptor>
+        <interceptor>
+            <interceptor-class>com.babel.interceptor.NullParamValidator</interceptor-class>
+        </interceptor>
+        <interceptor>
+            <interceptor-class>com.babel.interceptor.UserInfoLogger</interceptor-class>
+        </interceptor>
+        
+    </interceptors>
+    <assembly-descriptor>
+        <interceptor-binding>
+        <!-- the interceptor will be applied for all ejbs and methods -->
+            <ejb-name>*</ejb-name>
+            <interceptor-order>
+                <interceptor-class>com.babel.interceptor.TimeLogger</interceptor-class>
+            </interceptor-order>
+        </interceptor-binding>
+        <interceptor-binding>
+        <!-- the interceptor will be applied only for one bean -->
+            <ejb-name>SaveOrderEJB</ejb-name>
+            <interceptor-order>
+                <interceptor-class>com.babel.interceptor.UserInfoLogger</interceptor-class>
+                
+            </interceptor-order>
+        </interceptor-binding>
+        
+        <interceptor-binding>
+        <!-- the interceptor will be applied only for one bean and one method -->
+            <ejb-name>SaveOrderEJB</ejb-name>
+             <interceptor-class>com.babel.interceptor.NullParamValidator</interceptor-class>
+            <method><method-name>saveOrder</method-name></method>    
+           
+        </interceptor-binding>
+    </assembly-descriptor>
+    </ejb-jar>
