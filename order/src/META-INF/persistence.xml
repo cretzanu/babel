@@ -23,16 +23,11 @@
  				
  
  
-<!-- 
+<!-- Oracle config
 <persistence-unit name="RequisitionPU"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>eu.cec.digit.apps.meta.data.MetaData</class>
- 		<class>eu.cec.digit.apps.meta.data.document.ContactPersonDetail</class>
- 		<class>eu.cec.digit.apps.meta.data.document.Attachment</class>
- 		<class>eu.cec.digit.apps.meta.data.document.AttachmentBinary</class>
- 		<class>eu.cec.digit.apps.meta.data.document.Context</class>
- 		<class>eu.cec.digit.apps.meta.data.document.Item</class>
+		
  		
  	 		
 		<properties>
