@@ -43,14 +43,21 @@
         <version>2.3.2</version>
         <!-- configuring the ear plugin -->
         <configuration>
+        <!-- UNIQUE libraries within the app:
+         put dependencies into lib folder and DO NOT  
+         include them again in the wars. @see dependencies
+         http://maven.apache.org/plugins/maven-ear-plugin/examples/skinny-wars.html -->
+         
+          <skinnyWars>true</skinnyWars>
+          
         <!-- EAR file name should not contain version number. Duplicate EJB names in the app server are not allowed -->
         <finalName>order-ear</finalName>
           <modules>
-           <!--  <webModule>
->                         <groupId>com.blah</groupId>
->                         <artifactId>MyApp.Web</artifactId>
->                         <contextRoot>MyApp</contextRoot>
->                     </webModule> -->
+              <webModule>
+>                         <groupId>com.babel</groupId>
+>                         <artifactId>order-ws</artifactId>
+>                         <contextRoot>/order-ws</contextRoot>
+>                     </webModule>
             <ejbModule>
               <groupId>com.babel</groupId>
               <artifactId>orderejb</artifactId>
@@ -87,12 +94,29 @@
 	</build>
 
 	<dependencies>
-
+<dependency>
+			<groupId>com.babel.core</groupId>
+			<artifactId>babel-core</artifactId>
+			<version>1.0.0</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.babel</groupId>
+			<artifactId>order</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+		</dependency>
 		  <dependency>
 			<groupId>com.babel</groupId>
 			<artifactId>orderejb</artifactId>
 			<version>1.0</version>
 			<type>ejb</type>
+		</dependency>
+		   <dependency>
+			<groupId>com.babel</groupId>
+			<artifactId>order-ws</artifactId>
+			<version>1.0</version>
+			<type>war</type>
 		</dependency>
 
 	

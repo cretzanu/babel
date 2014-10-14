@@ -1,0 +1,183 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Document</title>
+<link href='../lib/kendo/styles/kendo.common.min.css' rel="stylesheet" />
+<link href='../lib/kendo/styles/kendo.default.min.css' rel="stylesheet" />
+<link href='../lib/kendo/styles/kendo.blueopal.min.css' rel="stylesheet" />
+<script type="text/javascript" src='../lib/kendo/js/jquery.min.js'></script>
+<script type="text/javascript" src='../lib/kendo/js/kendo.web.min.js'></script>
+<script type="text/javascript"
+	src='../lib/kendo/content/shared/js/console.js'></script>
+<script type="text/javascript" src='../lib/utils/form-utils.js'></script>
+</head>
+<body>
+	<div id="OrderForm">
+		<table id="OrderFormLayout" border="0" width="100%">
+			<tr>
+				<td width="10%"></td>
+				<td>
+					<fieldset>
+						<legend align="left">OrderForm</legend>
+						<div>
+							<label id='orderDateLabel' for='orderDate'>Date</label>: <input
+								type='text' id='orderDate' class="k-textbox"
+								data-bind='value:orderDate' />
+
+						</div>
+						<div>
+							<label id='customerNameLabel' for='customerName'>Contact
+								Person</label>: <input type='text' id='customerName' class="k-textbox"
+								data-bind='value:customerName' />
+
+						</div>
+						<div>
+							<label id='customerEmailLabel' for='customerEmail'>E-mail
+								Address</label>: <input type='text' id='customerEmail' class="k-textbox"
+								data-bind='value:customerEmail' />
+
+						</div>
+						<div>
+							<label id='deliveryAddressLabel' for='deliveryAddress'>Delivery Address</label>:
+							<input type='text' id='deliveryAddress' class="k-textbox"
+								data-bind='value:deliveryAddress' />
+
+						</div>
+						<div>
+							<label id='specialRequirementsLabel' for='specialRequirements'>Offer
+								Description</label>:
+							<textarea id='specialRequirements'
+								data-bind='value:specialRequirements' rows="10" cols="100"
+								style="height: 250px"></textarea>
+
+						</div>
+						<button id='AddCmd' class="k-button">Add</button>
+						<button id='RemoveCmd' class="k-button">Remove</button>
+						<table id='DetailsGrid' data-role='grid' data-editable='true'
+							data-navigatable="true" data-selectable="single"
+							data-resizable="true" data-bind='source: orderLines'
+							data-columns='[ 
+ {  "title": "#", "template": "#= 1 #","width":"3%"}
+ ,{"field": "item",    "title": "item", "template": "#= (item == null) ? \" \" : item #"} 
+ ,{"field": "price",    "title": "price", "template": "#= (price == null) ? \" \" : price #"} 
+ ,{"field": "quantity",    "title": "quantity", "template": "#= (quantity == null) ? \" \" : quantity #"} ]'></table>
+						<button id='SubmitCmd' class="k-button">Submit</button>
+
+					</fieldset>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+<script>
+	var viewModel; //bound JSON object
+	function getRootURI() {
+		return "../rest/order/";
+	}
+	function initData(data) {
+		$("#orderDate").width(125).kendoDatePicker({
+			format : "dd/MM/yyyy"
+		}).data("kendoDatePicker");
+		if (data.orderDate != null) {
+			data.orderDate = new Date(data.orderDate);
+		}
+		if (!$("#specialRequirements").data("kendoEditor"))
+			$("#specialRequirements").kendoEditor();
+		//form binding 
+		viewModel = kendo.observable(data);
+		kendo.unbind($("#OrderForm"));
+		kendo.bind($("#OrderForm"), viewModel);
+	}
+	$(document)
+			.ready(
+					function() {
+						$('#SubmitCmd')
+								.click(
+										function() {
+											var jsonUpdatedModel = JSON
+													.stringify(viewModel
+															.toJSON());
+											if (viewModel.get("id") != null)//update data request 
+												$
+														.ajax({
+															url : getRootURI(),
+															type : 'PUT',
+															cache : false,
+															data : jsonUpdatedModel,
+															contentType : 'application/json; charset=utf-8',
+															success : function(
+																	result) {
+																initData(result);
+																alert("The record has been successfuly updated!");
+															},
+															error : handleAjaxCallsInError
+														});
+											else
+												//create
+												$
+														.ajax({
+															url : getRootURI(),
+															type : 'POST',
+															cache : false,
+															data : jsonUpdatedModel,
+															contentType : 'application/json; charset=utf-8',
+															success : function(
+																	result) {
+																initData(result);
+																alert("The New record has been successfuly created:"
+																		+ result.id);
+															},
+															error : handleAjaxCallsInError
+														});
+										});
+					});
+
+	$(document).ready(function() {
+		$('#AddCmd').click(function() {
+			var grid = $("#DetailsGrid").data("kendoGrid");
+			grid.dataSource.add(DetailsGridNewRow);
+		});
+	});
+
+	$(document).ready(function() {
+		$('#RemoveCmd').click(function() {
+			var grid = $("#DetailsGrid").data("kendoGrid");
+			removeSelectedGridRow(grid);//utils function 
+		});
+	});
+
+	$(document).ready(function() {
+		var idParam = getParameterByName("id");
+		if (getParameterByName("id") != null)//read data request 
+			$.ajax({
+				url : getRootURI() + idParam,
+				type : 'GET',
+				cache : false,
+				contentType : 'application/json; charset=utf-8',
+				success : function(result) {
+					initData(result);
+				},
+				error : handleAjaxCallsInError
+			});
+		else
+			//read data request 
+			$.ajax({
+				url : getRootURI(),
+				type : 'GET',
+				cache : false,
+				contentType : 'application/json; charset=utf-8',
+				success : function(result) {
+					initData(result);
+				},
+				error : handleAjaxCallsInError
+			});
+	});
+
+	var DetailsGridNewRow = {
+		id : null,
+		item : "",
+		price : "",
+		quantity : ""
+	}
+</script>
+</html>

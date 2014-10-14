@@ -1,14 +1,17 @@
 package com.babel.order;
 
+import org.jboss.annotation.ejb.LocalBinding;
+
 /**
  * @author liviu.cretu
  * @version 1.0
  * @created 06-Oct-2014 7:34:55 PM
  */
-@javax.ejb.Stateless(name = "CreateOrderEJB",mappedName = "CreateOrderEJB") 
+@javax.ejb.Stateless 
 @javax.ejb.Remote(value=CreateOrder.class) 
+@javax.ejb.Local(value=CreateOrder.class) //JBoss 4.2 still supports same interface as Remote. Otherwise, extend remote interfce with anither interface
 @javax.ejb.TransactionManagement(javax.ejb.TransactionManagementType.CONTAINER)
-public class CreateOrderEJB implements CreateOrder {
+public class CreateOrderEJB implements CreateOrder, CreateOrderLocal {
 
 	private CreateOrder delegate;
 	@javax.persistence.PersistenceContext(unitName="myJPAUnit")

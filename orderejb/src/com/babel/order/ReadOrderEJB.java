@@ -7,6 +7,7 @@ package com.babel.order;
  */
 @javax.ejb.Stateless(name = "ReadOrderEJB",mappedName = "ReadOrderEJB") 
 @javax.ejb.Remote(value=ReadOrder.class) 
+@javax.ejb.Local(value=ReadOrder.class) 
 @javax.ejb.TransactionManagement(javax.ejb.TransactionManagementType.CONTAINER)
 public class ReadOrderEJB implements ReadOrder {
 

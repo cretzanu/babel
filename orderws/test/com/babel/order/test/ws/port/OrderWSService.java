@@ -17,14 +17,14 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "OrderWSService", targetNamespace = "http://order.babel.com/", wsdlLocation = "http://localhost:8080/order-ws/Order?wsdl")
+@WebServiceClient(name = "OrderWSService", targetNamespace = "http://ws.order.babel.com/", wsdlLocation = "http://localhost:8080/order-ws/Order?wsdl")
 public class OrderWSService
     extends Service
 {
 
     private final static URL ORDERWSSERVICE_WSDL_LOCATION;
     private final static WebServiceException ORDERWSSERVICE_EXCEPTION;
-    private final static QName ORDERWSSERVICE_QNAME = new QName("http://order.babel.com/", "OrderWSService");
+    private final static QName ORDERWSSERVICE_QNAME = new QName("http://ws.order.babel.com/", "OrderWSService");
 
     static {
         URL url = null;
@@ -69,7 +69,7 @@ public class OrderWSService
      */
     @WebEndpoint(name = "OrderWSPort")
     public OrderWS getOrderWSPort() {
-        return super.getPort(new QName("http://order.babel.com/", "OrderWSPort"), OrderWS.class);
+        return super.getPort(new QName("http://ws.order.babel.com/", "OrderWSPort"), OrderWS.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class OrderWSService
      */
     @WebEndpoint(name = "OrderWSPort")
     public OrderWS getOrderWSPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://order.babel.com/", "OrderWSPort"), OrderWS.class, features);
+        return super.getPort(new QName("http://ws.order.babel.com/", "OrderWSPort"), OrderWS.class, features);
     }
 
     private static URL __getWsdlLocation() {

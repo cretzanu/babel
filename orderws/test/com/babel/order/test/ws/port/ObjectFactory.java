@@ -1,7 +1,10 @@
 
 package com.babel.order.test.ws.port;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 /**
@@ -21,6 +24,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _Order_QNAME = new QName("http://ws.order.babel.com/", "order");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.babel.order.test.ws.port
@@ -35,6 +39,31 @@ public class ObjectFactory {
      */
     public Order createOrder() {
         return new Order();
+    }
+
+    /**
+     * Create an instance of {@link OrderLine }
+     * 
+     */
+    public OrderLine createOrderLine() {
+        return new OrderLine();
+    }
+
+    /**
+     * Create an instance of {@link Order.OrderLines }
+     * 
+     */
+    public Order.OrderLines createOrderOrderLines() {
+        return new Order.OrderLines();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Order }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.order.babel.com/", name = "order")
+    public JAXBElement<Order> createOrder(Order value) {
+        return new JAXBElement<Order>(_Order_QNAME, Order.class, null, value);
     }
 
 }

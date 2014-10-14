@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
@@ -21,6 +24,7 @@ import com.babel.core.data.PersistentEntity;
  */
 @Entity 
 @Table(name="OrderTable")
+@XmlRootElement
 public class Order extends PersistentEntity {
 
 	private String customerEmail;
@@ -30,7 +34,10 @@ public class Order extends PersistentEntity {
 	
 	private String specialRequirements;
 	 @OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)  @org.hibernate.annotations.Cascade(value=org.hibernate.annotations.CascadeType.DELETE_ORPHAN) 
-	@JsonManagedReference("orderLines")
+	 @JsonManagedReference("orderLines")
+	 @XmlElement 
+	 @XmlElementWrapper(name = "orderLines") 
+	 //@see http://java.dzone.com/articles/xml-bindings-jaxb-and-jax-rs
 	private Set<OrderLine> orderLines = new HashSet<OrderLine>();
 
 	public Order() {

@@ -31,9 +31,9 @@ public class TestOrderEJB {
 		// With JBoss AS 4.x, the default naming is EARFileName/ejb name/remote
 		// (for remote access)
 		readOrderService = (ReadOrder) new InitialContext()
-				.lookup("order-ear/ReadOrderEJB/remote");
+				.lookup("orderEAR(order-ear)/ReadOrderEJB/remote");
 		saveOrderService = (SaveOrder) new InitialContext()
-				.lookup("order-ear/SaveOrderEJB/remote");
+				.lookup("orderEAR(order-ear)/SaveOrderEJB/remote");
 	}
 
 	@Test

@@ -1,6 +1,8 @@
 
 package com.babel.order.test.ws.port;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
@@ -16,8 +18,19 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * <pre>
  * &lt;complexType name="order">
  *   &lt;complexContent>
- *     &lt;extension base="{http://order.babel.com/}persistentEntity">
+ *     &lt;extension base="{http://ws.order.babel.com/}persistentEntity">
  *       &lt;sequence>
+ *         &lt;element name="orderLines" minOccurs="0">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *                 &lt;sequence>
+ *                   &lt;element name="orderLines" type="{http://ws.order.babel.com/}orderLine" maxOccurs="unbounded" minOccurs="0"/>
+ *                 &lt;/sequence>
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
  *         &lt;element name="customerEmail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="customerName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="deliveryAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -33,6 +46,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "order", propOrder = {
+    "orderLines",
     "customerEmail",
     "customerName",
     "deliveryAddress",
@@ -43,12 +57,37 @@ public class Order
     extends PersistentEntity
 {
 
+    protected Order.OrderLines orderLines;
     protected String customerEmail;
     protected String customerName;
     protected String deliveryAddress;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar orderDate;
     protected String specialRequirements;
+
+    /**
+     * Gets the value of the orderLines property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Order.OrderLines }
+     *     
+     */
+    public Order.OrderLines getOrderLines() {
+        return orderLines;
+    }
+
+    /**
+     * Sets the value of the orderLines property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Order.OrderLines }
+     *     
+     */
+    public void setOrderLines(Order.OrderLines value) {
+        this.orderLines = value;
+    }
 
     /**
      * Gets the value of the customerEmail property.
@@ -168,6 +207,65 @@ public class Order
      */
     public void setSpecialRequirements(String value) {
         this.specialRequirements = value;
+    }
+
+
+    /**
+     * <p>Java class for anonymous complex type.
+     * 
+     * <p>The following schema fragment specifies the expected content contained within this class.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *       &lt;sequence>
+     *         &lt;element name="orderLines" type="{http://ws.order.babel.com/}orderLine" maxOccurs="unbounded" minOccurs="0"/>
+     *       &lt;/sequence>
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "orderLines"
+    })
+    public static class OrderLines {
+
+        protected List<OrderLine> orderLines;
+
+        /**
+         * Gets the value of the orderLines property.
+         * 
+         * <p>
+         * This accessor method returns a reference to the live list,
+         * not a snapshot. Therefore any modification you make to the
+         * returned list will be present inside the JAXB object.
+         * This is why there is not a <CODE>set</CODE> method for the orderLines property.
+         * 
+         * <p>
+         * For example, to add a new item, do as follows:
+         * <pre>
+         *    getOrderLines().add(newItem);
+         * </pre>
+         * 
+         * 
+         * <p>
+         * Objects of the following type(s) are allowed in the list
+         * {@link OrderLine }
+         * 
+         * 
+         */
+        public List<OrderLine> getOrderLines() {
+            if (orderLines == null) {
+                orderLines = new ArrayList<OrderLine>();
+            }
+            return this.orderLines;
+        }
+
     }
 
 }

@@ -1,0 +1,159 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Document</title>
+<link href='../lib/kendo/styles/kendo.common.min.css' rel="stylesheet" />
+<link href='../lib/kendo/styles/kendo.default.min.css' rel="stylesheet" />
+<link href='../lib/kendo/styles/kendo.blueopal.min.css' rel="stylesheet" />
+<script type="text/javascript" src='../lib/kendo/js/jquery.min.js'></script>
+<script type="text/javascript" src='../lib/kendo/js/kendo.web.min.js'></script>
+<script type="text/javascript"
+	src='../lib/kendo/content/shared/js/console.js'></script>
+<script type="text/javascript" src='../lib/utils/form-utils.js'></script>
+</head>
+<body>
+	<div id="OfferForm">
+		<table id="OfferFormLayout" border="0" width="100%">
+			<tr>
+				<td width="20%">Left Menu</td>
+				<td>
+					<fieldset>
+						<legend align="left">OfferForm</legend>
+						<div>
+							<label id='offerDateLabel' for='offerDate'>Date</label>: <input
+								type='text' id='offerDate' class="k-textbox"
+								data-bind='value:offerDate' />
+
+						</div>
+						<div>
+							<label id='contactNameLabel' for='contactName'>Contact
+								Person</label>: <input type='text' id='contactName' class="k-textbox"
+								data-bind='value:contactName' />
+
+						</div>
+						<div>
+							<label id='descriptionLabel' for='description'>Offer
+								Description</label>:
+							<textarea id='description' data-bind='value:description'
+								rows="10" cols="100" style="height: 200px">
+</textarea>
+
+						</div>
+						<button id='AddCmd' class="k-button">Add</button>
+						<button id='RemoveCmd' class="k-button">Remove</button>
+						<table id='DetailsGrid' data-role='grid' data-editable='true'
+							data-navigatable="true" data-selectable="single"
+							data-resizable="true" data-bind='source: offerDetails'
+							data-columns='[ 
+ {  "title": "#", "template": "#= 1 #","width":"3%"}
+ ,{"field": "item",    "title": "item", "template": "#= (item == null) ? \" \" : item #"} 
+ ,{"field": "price",    "title": "price", "template": "#= (price == null) ? \" \" : price #"} 
+ ,{"field": "discount",    "title": "discount", "template": "#= (discount == null) ? \" \" : discount #"} ]'></table>
+						<button id='SubmitCmd' class="k-button">Submit</button>
+
+					</fieldset>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+<script>
+	var viewModel; //bound JSON object
+	function getRootURI() {
+		return "../rest/offer/";
+	}
+	function initData(data) {
+		$("#offerDate").width(125).kendoDatePicker({
+			format : "dd/MM/yyyy"
+		}).data("kendoDatePicker");
+		if (data.offerDate != null) {
+			data.offerDate = new Date(data.offerDate);
+		}
+		if (!$("#description").data("kendoEditor"))
+			$("#description").kendoEditor();
+		//form binding 
+		viewModel = kendo.observable(data);
+		kendo.unbind($("#OfferForm"));
+		kendo.bind($("#OfferForm"), viewModel);
+	}
+	$(document).ready(function() {
+		$('#SubmitCmd').click(function() {
+			var jsonUpdatedModel = JSON.stringify(viewModel.toJSON());
+			if (viewModel.get("id") != null)//update data request 
+			$.ajax({
+				url : getRootURI() ,
+				type : 'PUT',
+				cache : false,
+				data : jsonUpdatedModel,
+				contentType : 'application/json; charset=utf-8',
+				success : function(result) {
+					initData(result);
+					alert("Record has been successfuly updated!");
+				},
+				error : handleAjaxCallsInError
+			});
+		else //create
+			$.ajax({
+				url : getRootURI(),
+				type : 'POST',
+				cache : false,
+				data : jsonUpdatedModel,
+				contentType : 'application/json; charset=utf-8',
+				success : function(result) {
+					initData(result);
+					alert("The New record has been successfuly created:"+result.id);
+					window.location=window.location+"?id="+result.id;
+				},
+				error : handleAjaxCallsInError
+			});
+		});
+	});
+
+	$(document).ready(function() {
+		$('#AddCmd').click(function() {
+			var grid = $("#DetailsGrid").data("kendoGrid");
+			grid.dataSource.add(DetailsGridNewRow);
+		});
+	});
+
+	$(document).ready(function() {
+		$('#RemoveCmd').click(function() {
+			var grid = $("#DetailsGrid").data("kendoGrid");
+			removeSelectedGridRow(grid);//utils function 
+		});
+	});
+
+	$(document).ready(function() {
+		var idParam = getParameterByName("id");
+		if (getParameterByName("id") != null)//read data request 
+			$.ajax({
+				url : getRootURI() + idParam,
+				type : 'GET',
+				cache : false,
+				contentType : 'application/json; charset=utf-8',
+				success : function(result) {
+					initData(result);
+				},
+				error : handleAjaxCallsInError
+			});
+		else
+			$.ajax({
+				url : getRootURI(),
+				type : 'GET',
+				cache : false,
+				contentType : 'application/json; charset=utf-8',
+				success : function(result) {
+					initData(result);
+				},
+				error : handleAjaxCallsInError
+			});
+	});
+
+	var DetailsGridNewRow = {
+		id :null,
+		item : "",
+		price : "",
+		discount : ""
+	}
+</script>
+</html>

@@ -45,7 +45,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "version"
 })
 @XmlSeeAlso({
-    Order.class
+    Order.class,
+    OrderLine.class
 })
 public abstract class PersistentEntity {
 
