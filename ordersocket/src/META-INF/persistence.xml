@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
-<!--  -->
-
-
 
 <!--	The value of this property is used to control the genration of DB
 				tables
@@ -14,8 +11,6 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
  		 <class>com.babel.order.Order</class>
  		 <class>com.babel.order.OrderLine</class>
- 		 
- 		
  		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
@@ -23,8 +18,6 @@
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
 			<property name="hibernate.connection.username" value="babel" />
 			<property name="hibernate.connection.password" value="babel100" />
-			
-			
 			
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
@@ -34,8 +27,32 @@
 		
 		
 	</persistence-unit> 
- 
 
- 
+ <!-- Oracle config
+<persistence-unit name="SomeName"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		
+ 		
+ 	 		
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@host:port:db" />
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="hibernate.connection.username" value="" />
+			<property name="hibernate.connection.password" value="" />
+			
+			
+			
+			<property name="hibernate.hbm2ddl.auto" value="none" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
 
+		</properties>
+		
+		
+	</persistence-unit> 
+ -->
+ 
 </persistence>
+

@@ -24,7 +24,7 @@
  
  
 <!-- Oracle config
-<persistence-unit name="RequisitionPU"
+<persistence-unit name="SomeName"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
