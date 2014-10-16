@@ -29,7 +29,7 @@
 	</persistence-unit> 
 
  <!-- Oracle config
-<persistence-unit name="SomeName"
+<persistence-unit name="BabelConnOrderSocket"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		
@@ -44,7 +44,7 @@
 			
 			
 			
-			<property name="hibernate.hbm2ddl.auto" value="none" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
 
