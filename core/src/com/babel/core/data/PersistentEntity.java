@@ -100,7 +100,7 @@ public abstract  class PersistentEntity implements Serializable,
 	 */
 	public void purify() {
 		for (Field f : this.getClass().getDeclaredFields()) {
-			// System.out.println(f.getName());
+			//System.out.println(f.getName());
 			if (f.getAnnotation(OneToMany.class) != null)
 				try {
 					f.setAccessible(true);
