@@ -17,7 +17,7 @@ public class OrderLine extends PersistentEntity {
 
 	private String item;
 	 @ManyToOne 
-	 @JsonBackReference("orderLines")
+	 @JsonBackReference//("orderLines")
 	private Order order;
 	private double price;
 	private double quantity;

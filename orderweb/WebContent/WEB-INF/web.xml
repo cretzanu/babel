@@ -16,9 +16,7 @@
 		<param-name>com.sun.jersey.config.property.JSPTemplatesBasePath</param-name>
 		<param-value>/WEB-INF/jsp</param-value>
 	</init-param>	
-	
-	
-	
+
   </servlet>
   <servlet-mapping>
     <servlet-name>Jersey Web Application</servlet-name>

@@ -7,18 +7,24 @@ package com.babel.ioemail;
  */
 public class SendEmailImpl implements SendEmail {
 
-	public SendEmailImpl(){
+	public SendEmailImpl() {
 
+	}
+
+	/**
+	 * 
+	 * @param p
+	 */
+	public void sendEmail(EmailMessage p) {
+		// TODO move the code from the handler here
+		// check the "to"
+		if (p.getTo() == null)
+			throw new IllegalArgumentException(
+					"the field -to- is mandatory and should contain one or more e-mail addresses");
+		System.out.println("Sending email message...TODO!");
 	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	/**
-	 * 
-	 * @param p
-	 */
-	public void sendEmail(EmailMessage p){
-		//return super.(p);
-	}
-}//end SendEmailImpl
+}// end SendEmailImpl

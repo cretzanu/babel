@@ -9,7 +9,7 @@ import javax.interceptor.Interceptors;
  */
 @javax.ejb.Stateless(name = "SaveOrderEJB",mappedName = "SaveOrderEJB") 
 @javax.ejb.Remote(value=SaveOrder.class) 
-@javax.ejb.Local(value=SaveOrder.class) 
+//@javax.ejb.Local(value=SaveOrder.class) 
 @javax.ejb.TransactionManagement(javax.ejb.TransactionManagementType.CONTAINER)
 public class SaveOrderEJB implements SaveOrder {
 
@@ -20,7 +20,7 @@ public class SaveOrderEJB implements SaveOrder {
 	public SaveOrderEJB(){
 
 	}
-
+//
 	public void finalize() throws Throwable {
 
 	}

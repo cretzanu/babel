@@ -31,11 +31,20 @@ public class TestOrderEJB {
 		// With JBoss AS 4.x, the default naming is EARFileName/ejb name/remote
 		// (for remote access)
 		readOrderService = (ReadOrder) new InitialContext()
-				.lookup("orderEAR(order-ear)/ReadOrderEJB/remote");
+				.lookup("orderEAR/ReadOrderEJB/remote");
 		saveOrderService = (SaveOrder) new InitialContext()
-				.lookup("orderEAR(order-ear)/SaveOrderEJB/remote");
+				.lookup("orderEAR/SaveOrderEJB/remote");
 	}
 
+	/**
+	 * Note: "javax.naming.NoInitialContextException:Cannot instantiate class
+	 * org.jnp.interfaces.Naming..." may appear on first attempt to run this
+	 * test. This may happen because there is no entry in pom for the app
+	 * server-specific dependencies (e.g JBoss). The easiest way to fix it is to
+	 * associate the project with the server runtime:
+	 * Eclipse/order-process-ejb/properties/runtime environments/check the
+	 * server you deploy on
+	 */
 	@Test
 	public void testReadUpdate() {
 		Order order = this.readOrderService.readOrder(ORDER_ID);
@@ -57,21 +66,27 @@ public class TestOrderEJB {
 
 	}
 
+	/**
+	 * Expecting an exception here.
+	 */
 	@Test
 	public void testNullParams() {
-		Throwable expectedException=null;
+		Throwable expectedException = null;
 		try {
 			this.saveOrderService.saveOrder(null);
 		} catch (Throwable e) {
 			e.printStackTrace();
-			//all serverside exceptions are wrapped around EJBException
-			//so, get the real one (cause)
-			expectedException=e.getCause();
-				}
-		assertNotNull("Expecting exception here. None received!", expectedException);
-		assertTrue("An IllegalArgumentException expected." + expectedException.getClass()
-				+ " received instead",
-				expectedException.getClass().equals(IllegalArgumentException.class));
+			// all serverside exceptions are wrapped around EJBException
+			// so, get the real one (the cause)
+			expectedException = e.getCause();
+		}
+		assertNotNull("Expecting exception here. None received!",
+				expectedException);
+		assertTrue(
+				"An IllegalArgumentException expected."
+						+ expectedException.getClass() + " received instead",
+				expectedException.getClass().equals(
+						IllegalArgumentException.class));
 
 	}
 }

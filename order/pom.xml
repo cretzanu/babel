@@ -65,12 +65,12 @@
 
 	<dependencies>
 
-		  <dependency>
+		 <dependency>
 			<groupId>com.babel.core</groupId>
 			<artifactId>babel-core</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-
+		
 
 		<!-- annotations for JSON serialization -->
 		<dependency>

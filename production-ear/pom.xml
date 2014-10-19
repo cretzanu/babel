@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.babel</groupId>
+	<artifactId>production-ear</artifactId>
+	<version>1.0</version>
+	<packaging>ear</packaging>
+	<name>Production App</name>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>test</testSourceDirectory>
+
+		<resources>
+			<resource>
+				<directory>resources</directory>
+				<filtering>true</filtering>
+			</resource>
+
+			<resource>
+				<directory>src</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>test</directory>
+				<targetPath>../test-classes</targetPath>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.3.2</version>
+				<!-- configuring the ear plugin -->
+				<configuration>
+					<!-- UNIQUE libraries within the app: put dependencies into lib folder 
+						and DO NOT include them again in the wars. @see dependencies http://maven.apache.org/plugins/maven-ear-plugin/examples/skinny-wars.html -->
+
+					<skinnyWars>true</skinnyWars>
+
+					<!-- EAR file name should not contain version number. Duplicate EJB 
+						names in the app server are not allowed -->
+					<finalName>production-ear</finalName>
+					<modules>
+						<!-- <webModule> <groupId>com.babel</groupId> <artifactId>production-web</artifactId> 
+							<contextRoot>/order-web</contextRoot> </webModule> -->
+
+						<ejbModule>
+							<groupId>com.babel</groupId>
+							<artifactId>production-ejb</artifactId>
+						</ejbModule>
+						<jarModule>
+							<groupId>com.babel</groupId>
+							<artifactId>production</artifactId>
+							<includeInApplicationXml>true</includeInApplicationXml>
+						</jarModule>
+						<jarModule>
+							<groupId>com.babel.core</groupId>
+							<artifactId>babel-core</artifactId>
+							<includeInApplicationXml>true</includeInApplicationXml>
+						</jarModule>
+						<!--more on this http://antoniogoncalves.org/2009/10/23/because-i-always-forget-how-to-use-maven-ear-plugin/ -->
+
+					</modules>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+
+		
+		  <dependency>
+			<groupId>com.babel</groupId>
+			<artifactId>production-ejb</artifactId>
+			<version>1.0</version>
+			<type>ejb</type>
+			
+		 </dependency>
+		   <!-- <dependency>
+			<groupId>com.babel</groupId>
+			<artifactId>production-web</artifactId>
+			<version>1.0</version>
+			<type>war</type>
+		</dependency>  -->
+
+	</dependencies>
+</project>

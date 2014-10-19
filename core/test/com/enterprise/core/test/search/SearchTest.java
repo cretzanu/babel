@@ -19,7 +19,7 @@ public class SearchTest {
 	
 	
 	public void test1(){
-		SearchDigitEntityRequest sb=new SearchDigitEntityRequest();
+		SearchEntityTest sb=new SearchEntityTest();
 		sb.getUser().setOperator(Operator.EQUALS_TO);
 		sb.getUser().setValue("abc");
 		sb.getDateUpdated().setOperator(Operator.GREATER_THEN);
@@ -33,34 +33,7 @@ public class SearchTest {
 			throw new RuntimeException("Test1 failed: generated query is not the right one");
 		
 	}
-	
-//	public void testIgnoreNullValuePredicates(){
-//		SearchDigitEntityRequest sb=new SearchDigitEntityRequest();
-//		sb.getUser().setOperator(Operator.EQUALS_TO);
-//		sb.getUser().setValue("abc");
-//		sb.getDateUpdated().setOperator(Operator.GREATER_THEN);
-//		sb.getDateUpdated().setValue(null);
-//		String buildQuery = sb.buildQueryString();
-//		System.out.println(buildQuery);
-//		boolean equals = buildQuery.equals("select t from DigitEntity t where 1=1  AND t.updatedByUser=:updatedByUser");
-//		if (!equals)
-//			throw new RuntimeException("testIgnoreNullValuePredicates failed: generated query is not the right one");
-//		
-//		
-//	}
-//	public void testOracleDates(){
-//		SearchDigitEntityRequest.SEARCH_CRITERIA_FACTORY_CLASS=new PredicateFactoryDialectOracle();
-//		SearchDigitEntityRequest sb=new SearchDigitEntityRequest();
-//		
-//		sb.getDateUpdated().setOperator(Operator.GREATER_THEN);
-//		sb.getDateUpdated().setValue(new Date());
-//		String buildQuery = sb.buildQueryString();
-//		System.out.println(buildQuery);
-//		boolean equals = buildQuery.equals("select t from DigitEntity t where 1=1  AND TRUNC(t.dateUpdated)>:dateUpdated");
-//		if (!equals)
-//			throw new RuntimeException("testOracleDates failed: generated query is not the right one");
-//		
-//	}
+
 	
 	
 }

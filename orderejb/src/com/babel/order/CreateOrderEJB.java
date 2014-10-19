@@ -8,7 +8,7 @@ package com.babel.order;
  */
 @javax.ejb.Stateless 
 @javax.ejb.Remote(value=CreateOrder.class) 
-@javax.ejb.Local(value=CreateOrder.class) //JBoss 4.2 still supports same interface as Remote. Otherwise, extend remote interfce with anither interface
+//@javax.ejb.Local(value=CreateOrder.class) //JBoss 4.2 still supports same interface as Remote. Otherwise, extend remote interfce with anither interface
 @javax.ejb.TransactionManagement(javax.ejb.TransactionManagementType.CONTAINER)
 public class CreateOrderEJB implements CreateOrder {
 

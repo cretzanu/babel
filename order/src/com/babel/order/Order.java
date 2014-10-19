@@ -27,23 +27,36 @@ import com.babel.core.data.PersistentEntity;
 @XmlRootElement
 public class Order extends PersistentEntity {
 
+	
 	private String customerEmail;
 	private String customerName;
 	private String deliveryAddress;
 	private Date orderDate;
-	
 	private String specialRequirements;
-	 @OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)  @org.hibernate.annotations.Cascade(value=org.hibernate.annotations.CascadeType.DELETE_ORPHAN) 
-	 @JsonManagedReference("orderLines")
-	 @XmlElement 
-	 @XmlElementWrapper(name = "orderLines") 
-	 //@see http://java.dzone.com/articles/xml-bindings-jaxb-and-jax-rs
+	/**
+	 * The Order may be involved in multiple external processes. 
+  	 * This field should store a collection of all process identifiers.
+  	 * For the sake of simplicity, we use only one here.
+	 */
+	private String processId;
+	
+	@XmlElement
+	@XmlElementWrapper(name="orderLines")
+	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)  @org.hibernate.annotations.Cascade(value=org.hibernate.annotations.CascadeType.DELETE_ORPHAN) 
+	@JsonManagedReference 	
 	private Set<OrderLine> orderLines = new HashSet<OrderLine>();
 
 	public Order() {
 
 	}
-
+	
+	
+	public Double calculateOrderValue(){
+		double s=0;
+		for (OrderLine l:this.orderLines)
+			s=s+l.getPrice()*l.getQuantity();
+		return s;
+	}
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
@@ -124,4 +137,23 @@ public class Order extends PersistentEntity {
 	public Set<OrderLine> getOrderLines(){
 		return this.orderLines;
 	}
+
+
+
+	public String getProcessId() {
+		return processId;
+	}
+
+
+
+	public void setProcessId(String processId) {
+		this.processId = processId;
+	}
+
+
+
+	public void setOrderLines(Set<OrderLine> orderLines) {
+		this.orderLines = orderLines;
+	}
+	
 }// end Order

@@ -67,11 +67,28 @@
    
    <!-- order-app-->
 	 
-  	<dependency>
-  		 <groupId>com.babel</groupId>
-   		  <artifactId>orderejb</artifactId>
-   		  <version>1.0</version>
-  	</dependency>
+  	 <dependency>
+			<groupId>com.babel</groupId>
+			<artifactId>order</artifactId>
+			<version>1.0</version>
+			<!-- optional=it will not be included in WEB-INF/lib
+			Use this config ONLY when the war is deployed in .ear
+			@see orderEAR/pom.xml  
+			<optional>true</optional>-->
+			<exclusions>
+        <exclusion>  <!-- JBoss App Server already has a JPA-Hibernate implementation. So, avoid classloader conflicts -->
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-entitymanager</artifactId>
+        </exclusion>
+      </exclusions> 
+		</dependency>
+		<dependency> <!-- Still need this dependency to compile. <scope>provided</scope> will not include the libraries in WEB-INF  -->
+			 <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-entitymanager</artifactId>
+          <version>3.4.0.GA</version>
+			<scope>provided</scope> 
+		</dependency>
+
 		
 
 	<dependency>

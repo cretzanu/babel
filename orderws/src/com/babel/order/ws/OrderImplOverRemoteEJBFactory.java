@@ -34,7 +34,7 @@ public class OrderImplOverRemoteEJBFactory extends OrderImplFactory {
 			System.out.println("CreateOrder Factory provides " + ejbInterface
 					+ " EJB interface");
 			return (CreateOrder) new InitialContext()
-					.lookup("orderEAR(order-ear)/CreateOrderEJB/" + ejbInterface);
+					.lookup("orderEAR/CreateOrderEJB/" + ejbInterface);
 		} catch (NamingException e) {
 			throw new RuntimeException(e);
 		}
@@ -45,7 +45,7 @@ public class OrderImplOverRemoteEJBFactory extends OrderImplFactory {
 			System.out.println("ReadOrder Factory provides " + ejbInterface
 					+ " EJB interface");
 			return (ReadOrder) new InitialContext()
-					.lookup("orderEAR(order-ear)/ReadOrderEJB/" + ejbInterface);
+					.lookup("orderEAR/ReadOrderEJB/" + ejbInterface);
 		} catch (NamingException e) {
 			throw new RuntimeException(e);
 		}
@@ -56,7 +56,7 @@ public class OrderImplOverRemoteEJBFactory extends OrderImplFactory {
 			System.out.println("SaveOrder Factory provides " + ejbInterface
 					+ " EJB interface");
 			return (SaveOrder) new InitialContext()
-					.lookup("orderEAR(order-ear)/SaveOrderEJB/" + ejbInterface);
+					.lookup("orderEAR/SaveOrderEJB/" + ejbInterface);
 		} catch (NamingException e) {
 			throw new RuntimeException(e);
 		}

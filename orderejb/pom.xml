@@ -47,8 +47,8 @@
 					</clientExcludes>
 				</configuration>
 			</plugin>
-			
-      
+
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
@@ -67,18 +67,19 @@
 
 	<dependencies>
 
-		  <dependency>
+		<dependency>
 			<groupId>com.babel</groupId>
 			<artifactId>order</artifactId>
 			<version>1.0</version>
 		</dependency>
- <dependency>
-      <groupId>javax.ejb</groupId>
-      <artifactId>ejb-api</artifactId>
-      <version>3.0</version>
-      <scope>provided</scope>
-    </dependency>
-    
+
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<version>3.0</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
@@ -98,6 +99,6 @@
 			<version>1.2.13</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 	</dependencies>
 </project>

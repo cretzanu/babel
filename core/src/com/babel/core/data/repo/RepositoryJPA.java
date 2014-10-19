@@ -16,7 +16,7 @@ import com.babel.core.data.search.engine.SearchEngineFactory;
  * @author cretuli
  * 
  */
-public abstract class RepositoryJPA implements  Repository {
+public  class RepositoryJPA implements  Repository {
 	
 	EntityManager em;
 	

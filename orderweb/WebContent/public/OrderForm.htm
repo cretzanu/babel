@@ -100,7 +100,7 @@
 											if (viewModel.get("id") != null)//update data request 
 												$
 														.ajax({
-															url : getRootURI(),
+															url : getRootURI()+viewModel.get("id"),
 															type : 'PUT',
 															cache : false,
 															data : jsonUpdatedModel,
@@ -160,9 +160,9 @@
 				error : handleAjaxCallsInError
 			});
 		else
-			//read data request 
+			//template data request 
 			$.ajax({
-				url : getRootURI(),
+				url : getRootURI()+"template",
 				type : 'GET',
 				cache : false,
 				contentType : 'application/json; charset=utf-8',

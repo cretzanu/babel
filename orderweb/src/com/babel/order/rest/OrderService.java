@@ -1,5 +1,8 @@
 package com.babel.order.rest;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,61 +12,70 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.babel.order.CreateOrder;
 import com.babel.order.Order;
+import com.babel.order.OrderLine;
+import com.babel.order.ReadOrder;
+import com.babel.order.SaveOrder;
 
 /**
  * @author liviu.cretu
  * @version 1.0
  * @created 14-Oct-2014 10:41:03 AM
  */
-@Path("/order")
+@Path("/orders")
 public class OrderService {
 
+	CreateOrder createOrderDelegate;
+	ReadOrder readOrderDelegate;
+	SaveOrder saveOrderDelegate;
+	
 	public OrderService() {
-
+		this.createOrderDelegate=OrderImplFactory.getInstance().createOrderFactory();
+		this.readOrderDelegate=OrderImplFactory.getInstance().readOrderFactory();
+		this.saveOrderDelegate=OrderImplFactory.getInstance().saveOrderFactory();
 	}
 
-	public void finalize() throws Throwable {
-
-	}
-
-	/**
-	 * 
-	 * @param p
-	 */
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Order createOrder(Order p) {
-		return OrderFactory.CreateOrderFactory().createOrder(p);
+		return this.createOrderDelegate.createOrder(p);
 	}
 
 	@GET
+	@Path("/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Order readOrder(@PathParam("id") Long id) {
+//		Order p= new Order();
+//		p.getOrderLines().add(new OrderLine());
+//		p.getOrderLines().add(new OrderLine());
+//		return p;
+		
+		Order e = this.readOrderDelegate.readOrder(id);
+		e.purify();
+		return e;
+	}
+
+	
+	@PUT
+	@Path("/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Consumes({ MediaType.APPLICATION_JSON })
+	public Order saveOrder(Order p) {
+		return this.saveOrderDelegate.saveOrder(p);
+	}
+	
+	@GET
+	@Path("/template")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Order newOrder() {
 		return new Order();
 	}
 
-	/**
-	 * 
-	 * @param p
-	 */
 	@GET
-	@Path("/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Order readOrder(@PathParam("id") Long p) {
-		Order e = OrderFactory.ReadOrderFactory().readOrder(p);
-		e.purify();
-		return e;
-	}
-
-	/**
-	 * 
-	 * @param p
-	 */
-	@PUT
-	@Produces({ MediaType.APPLICATION_JSON })
-	@Consumes({ MediaType.APPLICATION_JSON })
-	public Order saveOrder(Order p) {
-		return OrderFactory.SaveOrderFactory().saveOrder(p);
+	public List<Order> readAllOrders() {
+		return new LinkedList<Order>();
+		//TODO: implement the ReadOrdersAll interface
 	}
 }// end OrderService
