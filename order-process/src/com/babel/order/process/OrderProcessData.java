@@ -9,6 +9,7 @@ import com.babel.core.data.PersistentEntity;
 @Entity
 public class OrderProcessData extends PersistentEntity{
 
+	
 	private Long orderId;
 	@Enumerated(EnumType.STRING)
 	private ProcessState processState;
