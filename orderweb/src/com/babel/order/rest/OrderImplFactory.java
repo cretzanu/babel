@@ -15,17 +15,17 @@ public class OrderImplFactory {
 	but there is no container-managed transactions.
 	As a consequence, you have to manage transactions manually (e.g. implement Chain-of-Responsibilities design pattern to begin/commit transaction)
 	**/
-	private javax.persistence.EntityManager em = null;
-//			=Persistence
-//			.createEntityManagerFactory("myJPAUnitOrderWeb")
-//			.createEntityManager();
-//	static private OrderImplFactory f = new OrderImplFactory();
+	private javax.persistence.EntityManager em = //null;
+			Persistence
+			.createEntityManagerFactory("myJPAUnitOrderWeb")
+			.createEntityManager();
+	static private OrderImplFactory f = new OrderImplFactory();
 	/**
 	 * Use the EJB implementation for the requred delegates.
 	 * This one is for remote EJBs (when .war is deployed standalone
 	 * 
 	 */
-	static private OrderImplFactory f = new OrderImplOverRemoteEJBFactory();
+//	static private OrderImplFactory f = new OrderImplOverRemoteEJBFactory();
 	
 	/**
 	 * Use the EJB implementation for the requred delegates.
