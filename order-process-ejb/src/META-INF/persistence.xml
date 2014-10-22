@@ -10,7 +10,7 @@
 		<jta-data-source>java:/myJPAUnitDS</jta-data-source>
 		 <class>com.babel.core.data.PersistentEntity</class>
 		 <class>com.babel.order.process.OrderProcessData</class>
-		 <!--  when running dependencies on services  
+		 <!-- uncomment when running dependencies as local objects instead of services  
 		 <class>com.babel.order.Order</class>
  		 <class>com.babel.order.OrderLine</class>
  		 <class>com.babel.accounting.Invoice</class>
