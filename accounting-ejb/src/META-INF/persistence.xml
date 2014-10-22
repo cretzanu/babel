@@ -11,6 +11,7 @@
 		<jta-data-source>java:/myJPAUnitDS</jta-data-source>
 		<class>com.babel.core.data.PersistentEntity</class>
 		<class>com.babel.accounting.Invoice</class>
+		<class>com.babel.accounting.impl.BankAccountOperation</class>
  		
 		<properties>
 			<property name="hibernate.dialect"

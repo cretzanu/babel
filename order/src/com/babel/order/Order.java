@@ -31,12 +31,13 @@ public class Order extends PersistentEntity {
 	private String customerEmail;
 	private String customerName;
 	private String deliveryAddress;
+	private String bankAccount;
 	private Date orderDate;
 	private String specialRequirements;
 	/**
 	 * The Order may be involved in multiple external processes. 
   	 * This field should store a collection of all process identifiers.
-  	 * For the sake of simplicity, we use only one here.
+  	 * For the sake of simplicity, we assume only one external here.
 	 */
 	private String processId;
 	
@@ -155,5 +156,16 @@ public class Order extends PersistentEntity {
 	public void setOrderLines(Set<OrderLine> orderLines) {
 		this.orderLines = orderLines;
 	}
+
+
+	public String getBankAccount() {
+		return bankAccount;
+	}
+
+
+	public void setBankAccount(String bankAccount) {
+		this.bankAccount = bankAccount;
+	}
+	
 	
 }// end Order

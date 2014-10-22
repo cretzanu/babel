@@ -1,5 +1,7 @@
 package com.babel.accounting;
 
+import com.babel.accounting.impl.CreateInvoiceImpl;
+
 
 /**
  * @author liviu.cretu

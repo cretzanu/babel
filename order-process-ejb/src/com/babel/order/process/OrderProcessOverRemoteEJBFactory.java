@@ -4,7 +4,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.babel.accounting.CreateInvoice;
-import com.babel.accounting.CreateInvoiceImpl;
+import com.babel.accounting.OperateBankAccount;
+import com.babel.accounting.impl.CreateInvoiceImpl;
 import com.babel.order.CreateOrder;
 import com.babel.order.ReadOrder;
 import com.babel.order.SaveOrder;
@@ -33,6 +34,7 @@ public class OrderProcessOverRemoteEJBFactory extends OrderProcessFactory {
 
 	protected OrderProcessOverRemoteEJBFactory() {
 	}
+
 	@Override
 	public ReadOrder readOrderFactory() {
 		try {
@@ -44,6 +46,7 @@ public class OrderProcessOverRemoteEJBFactory extends OrderProcessFactory {
 			throw new RuntimeException(e);
 		}
 	}
+
 	@Override
 	public SaveOrder saveOrderFactory() {
 		try {
@@ -55,8 +58,7 @@ public class OrderProcessOverRemoteEJBFactory extends OrderProcessFactory {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	
+
 	@Override
 	public CreateInvoice createInvoiceFactory() {
 		try {
@@ -68,24 +70,35 @@ public class OrderProcessOverRemoteEJBFactory extends OrderProcessFactory {
 			throw new RuntimeException(e);
 		}
 	}
+
 	@Override
 	public CreateProductionPlan createProductionPlanFactory() {
 		try {
-			System.out.println("CreateProductionPlan Factory provides " + ejbInterface
-					+ " EJB interface");
+			System.out.println("CreateProductionPlan Factory provides "
+					+ ejbInterface + " EJB interface");
 			return (CreateProductionPlan) new InitialContext()
-					.lookup("production-ear/CreateProductionPlanEJB/" + ejbInterface);
+					.lookup("production-ear/CreateProductionPlanEJB/"
+							+ ejbInterface);
 		} catch (NamingException e) {
 			throw new RuntimeException(e);
 		}
 	}
-//remains as it is in the super-class (order-process operation)
-//	public CreateOrderProcessData createOrderProcessDataFactory() {
-		
+	// remains as it is in the super-class (an order-process internal operation)
+	// public CreateOrderProcessData createOrderProcessDataFactory() {
 
-	
-	//remains as it is in the super-class (order-process operation)
-	//public ReadOrderProcessData readOrderProcessDataFactory() {
-		
+	// remains as it is in the super-class (an order-process internal operation)
+	// public ReadOrderProcessData readOrderProcessDataFactory() {
 
+	@Override
+	public OperateBankAccount operateBankAccountFactory(){
+		try {
+			System.out.println("OperateBankAccount Factory provides "
+					+ ejbInterface + " EJB interface");
+			return (OperateBankAccount) new InitialContext()
+					.lookup("accounting-ear/OperateBankAccountEJB/"
+							+ ejbInterface);
+		} catch (NamingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

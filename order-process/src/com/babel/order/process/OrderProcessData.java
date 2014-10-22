@@ -12,7 +12,7 @@ public class OrderProcessData extends PersistentEntity{
 	
 	private Long orderId;
 	@Enumerated(EnumType.STRING)
-	private ProcessState processState;
+	private ProcessStateType processState;
 	private Long productionPlanId;
 	private Long proformaInvoiceId;
 	public Long getOrderId() {
@@ -21,10 +21,10 @@ public class OrderProcessData extends PersistentEntity{
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
-	public ProcessState getProcessState() {
+	public ProcessStateType getProcessState() {
 		return processState;
 	}
-	public void setProcessState(ProcessState processState) {
+	public void setProcessState(ProcessStateType processState) {
 		this.processState = processState;
 	}
 	public Long getProductionPlanId() {

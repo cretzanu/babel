@@ -39,5 +39,12 @@
             <method><method-name>saveOrder</method-name></method>    
            
         </interceptor-binding>
+        <interceptor-binding>
+        <!-- the interceptor will be applied only for one bean and one method -->
+            <ejb-name>CreateOrderEJB</ejb-name>
+             <interceptor-class>com.babel.interceptor.NullParamValidator</interceptor-class>
+            <method><method-name>createOrder</method-name></method>    
+           
+        </interceptor-binding>
     </assembly-descriptor>
     </ejb-jar>

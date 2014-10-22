@@ -10,7 +10,7 @@ import com.babel.order.ReadOrder;
 import com.babel.order.SaveOrder;
 import com.babel.order.process.ApproveOrder;
 import com.babel.order.process.OrderProcessData;
-import com.babel.order.process.ProcessState;
+import com.babel.order.process.ProcessStateType;
 import com.babel.order.process.internal.CreateOrderProcessData;
 import com.babel.order.process.internal.ReadOrderProcessData;
 import com.babel.production.CreateProductionPlan;
@@ -44,7 +44,7 @@ public class ApproveOrderImpl implements ApproveOrder{
 		opd.setOrderId(order.getId());
 		opd.setProductionPlanId(plan.getId());
 		opd.setProformaInvoiceId(i.getId());
-		opd.setProcessState(ProcessState.APPROVED);
+		opd.setProcessState(ProcessStateType.APPROVED);
 		opd=this.createOrderProcessDataDelegate.createOrderProcessInfo(opd);
 		
 		order.setProcessId("ORDER-PROCESS-"+opd.getId());

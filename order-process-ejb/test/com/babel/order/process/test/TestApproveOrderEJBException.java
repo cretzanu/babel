@@ -16,8 +16,8 @@ import com.babel.order.process.ApproveOrder;
  * the AppproveOrder activity. According to the business logic, if the e-mail
  * cannot be sent, the system should rollback all previous updates (in
  * accounting, production and order). This test will simulate the scenario that
- * will trigger this exception. Then we have to check that there is no new
- * record created in any of the tables and databases (if you have configured for
+ * will trigger this exception. Then we have to check there is no new
+ * record created in any of the tables from each databases (if you have configured for
  * multiple databases - the most realistic environment).
  */
 public class TestApproveOrderEJBException {
