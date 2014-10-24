@@ -53,11 +53,11 @@
         <!-- EAR file name should not contain version number. Duplicate EJB names in the app server are not allowed -->
         <finalName>orderEAR</finalName>
           <modules>
-           <!--    <webModule>
+              <webModule>
 				<groupId>com.babel</groupId>
-				<artifactId>order-web</artifactId>
-				<contextRoot>/order-web</contextRoot>
-			</webModule> -->
+				<artifactId>order-ws</artifactId>
+				<contextRoot>/order-ws</contextRoot>
+			</webModule> 
 					
             <ejbModule>
               <groupId>com.babel</groupId>
@@ -115,12 +115,12 @@
 			<type>ejb</type>			
 		 </dependency>
 		 
-		   <!-- <dependency>
+		    <dependency>
 			<groupId>com.babel</groupId>
-			<artifactId>order-web</artifactId>
+			<artifactId>order-ws</artifactId>
 			<version>1.0</version>
 			<type>war</type>
-		</dependency>  -->
+		</dependency> 
  
 	
 		

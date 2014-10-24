@@ -14,6 +14,7 @@ import org.junit.Test;
 import com.babel.order.test.ws.port.OrderWS;
 import com.babel.order.test.ws.port.OrderWSService;
 
+
 public class TestOrderWS {
 
 	OrderWS orderServiceDelegate;
@@ -27,7 +28,7 @@ public class TestOrderWS {
 	}
 	@Test
 	public void testService(){
-		com.babel.order.test.ws.port.Order order=this.orderServiceDelegate.readOrder(4L);
+		com.babel.order.test.ws.port.Order order=this.orderServiceDelegate.readOrder(7L);
 		//for strange errors with jboss AS
 		//https://issues.jboss.org/browse/JBWS-2418
 		assertNotNull("Order not found",order);

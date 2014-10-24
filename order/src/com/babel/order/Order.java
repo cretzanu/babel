@@ -9,9 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
@@ -25,6 +28,7 @@ import com.babel.core.data.PersistentEntity;
 @Entity 
 @Table(name="OrderTable")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Order extends PersistentEntity {
 
 	
@@ -43,6 +47,7 @@ public class Order extends PersistentEntity {
 	
 	@XmlElement
 	@XmlElementWrapper(name="orderLines")
+	
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)  @org.hibernate.annotations.Cascade(value=org.hibernate.annotations.CascadeType.DELETE_ORPHAN) 
 	@JsonManagedReference 	
 	private Set<OrderLine> orderLines = new HashSet<OrderLine>();

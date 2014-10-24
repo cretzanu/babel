@@ -20,6 +20,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;extension base="{http://ws.order.babel.com/}persistentEntity">
  *       &lt;sequence>
+ *         &lt;element name="customerEmail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="customerName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="deliveryAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="bankAccount" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="orderDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="specialRequirements" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="processId" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="orderLines" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -31,11 +38,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element name="customerEmail" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="customerName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="deliveryAddress" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="orderDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
- *         &lt;element name="specialRequirements" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -46,48 +48,28 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "order", propOrder = {
-    "orderLines",
     "customerEmail",
     "customerName",
     "deliveryAddress",
+    "bankAccount",
     "orderDate",
-    "specialRequirements"
+    "specialRequirements",
+    "processId",
+    "orderLines"
 })
 public class Order
     extends PersistentEntity
 {
 
-    protected Order.OrderLines orderLines;
     protected String customerEmail;
     protected String customerName;
     protected String deliveryAddress;
+    protected String bankAccount;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar orderDate;
     protected String specialRequirements;
-
-    /**
-     * Gets the value of the orderLines property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Order.OrderLines }
-     *     
-     */
-    public Order.OrderLines getOrderLines() {
-        return orderLines;
-    }
-
-    /**
-     * Sets the value of the orderLines property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Order.OrderLines }
-     *     
-     */
-    public void setOrderLines(Order.OrderLines value) {
-        this.orderLines = value;
-    }
+    protected String processId;
+    protected Order.OrderLines orderLines;
 
     /**
      * Gets the value of the customerEmail property.
@@ -162,6 +144,30 @@ public class Order
     }
 
     /**
+     * Gets the value of the bankAccount property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getBankAccount() {
+        return bankAccount;
+    }
+
+    /**
+     * Sets the value of the bankAccount property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setBankAccount(String value) {
+        this.bankAccount = value;
+    }
+
+    /**
      * Gets the value of the orderDate property.
      * 
      * @return
@@ -207,6 +213,54 @@ public class Order
      */
     public void setSpecialRequirements(String value) {
         this.specialRequirements = value;
+    }
+
+    /**
+     * Gets the value of the processId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getProcessId() {
+        return processId;
+    }
+
+    /**
+     * Sets the value of the processId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setProcessId(String value) {
+        this.processId = value;
+    }
+
+    /**
+     * Gets the value of the orderLines property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Order.OrderLines }
+     *     
+     */
+    public Order.OrderLines getOrderLines() {
+        return orderLines;
+    }
+
+    /**
+     * Sets the value of the orderLines property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Order.OrderLines }
+     *     
+     */
+    public void setOrderLines(Order.OrderLines value) {
+        this.orderLines = value;
     }
 
 
