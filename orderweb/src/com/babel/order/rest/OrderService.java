@@ -3,6 +3,8 @@ package com.babel.order.rest;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,7 +16,6 @@ import javax.ws.rs.core.MediaType;
 
 import com.babel.order.CreateOrder;
 import com.babel.order.Order;
-import com.babel.order.OrderLine;
 import com.babel.order.ReadOrder;
 import com.babel.order.SaveOrder;
 
@@ -24,16 +25,19 @@ import com.babel.order.SaveOrder;
  * @created 14-Oct-2014 10:41:03 AM
  */
 @Path("/orders")
+
 public class OrderService {
 
 	CreateOrder createOrderDelegate;
 	ReadOrder readOrderDelegate;
 	SaveOrder saveOrderDelegate;
-	
+	 
 	public OrderService() {
-		this.createOrderDelegate=OrderImplFactory.getInstance().createOrderFactory();
-		this.readOrderDelegate=OrderImplFactory.getInstance().readOrderFactory();
-		this.saveOrderDelegate=OrderImplFactory.getInstance().saveOrderFactory();
+		OrderFactory f=OrderFactory.factory();
+		this.createOrderDelegate=f.createOrderFactory();
+		this.readOrderDelegate=f.readOrderFactory();
+		this.saveOrderDelegate=f.saveOrderFactory();
+		
 	}
 
 	@POST
@@ -46,10 +50,6 @@ public class OrderService {
 	@Path("/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Order readOrder(@PathParam("id") Long id) {
-//		Order p= new Order();
-//		p.getOrderLines().add(new OrderLine());
-//		p.getOrderLines().add(new OrderLine());
-//		return p;
 		
 		Order e = this.readOrderDelegate.readOrder(id);
 		e.purify();

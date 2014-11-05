@@ -1,25 +1,27 @@
 package com.babel.order.rest;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 import com.babel.order.CreateOrder;
 import com.babel.order.CreateOrderImpl;
+import com.babel.order.CreateOrderTA;
 import com.babel.order.ReadOrder;
 import com.babel.order.ReadOrderImpl;
 import com.babel.order.SaveOrder;
 import com.babel.order.SaveOrderImpl;
+import com.babel.order.SaveOrderTA;
 
-public class OrderImplFactory {
+public class OrderImplFactory extends OrderFactory {
 	
 	/**This implementation is working with a RESOURCE-LOCAL EM configuration
 	but there is no container-managed transactions.
 	As a consequence, you have to manage transactions manually (e.g. implement Chain-of-Responsibilities design pattern to begin/commit transaction)
 	**/
-	private javax.persistence.EntityManager em = //null;
+	private static javax.persistence.EntityManagerFactory emf = //null;
 			Persistence
-			.createEntityManagerFactory("myJPAUnitOrderWeb")
-			.createEntityManager();
-	static private OrderImplFactory f = new OrderImplFactory();
+			.createEntityManagerFactory("myJPAUnitOrderWeb");
+	
 	/**
 	 * Use the EJB implementation for the requred delegates.
 	 * This one is for remote EJBs (when .war is deployed standalone
@@ -34,29 +36,41 @@ public class OrderImplFactory {
 	 */
 	//static private OrderImplFactory f = new OrderImplOverLocalEJBFactory();
 	
-	protected OrderImplFactory() {
-
+	
+	protected OrderImplFactory() {}
+	
+	protected EntityManager getEm(){
+		return emf.createEntityManager();
 	}
-
-	public static OrderImplFactory getInstance() {
-		return f;
-	}
-
+	/* (non-Javadoc)
+	 * @see com.babel.order.rest.OrderFactory#createOrderFactory()
+	 */
+	@Override
 	public CreateOrder createOrderFactory() {
-		CreateOrderImpl delegate = new CreateOrderImpl();
-		delegate.setEm(em);
+		//we need the transaction aware implementation here
+		CreateOrderImpl delegate = new CreateOrderTA();
+		delegate.setEm(this.getEm());
 		return delegate;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.babel.order.rest.OrderFactory#readOrderFactory()
+	 */
+	@Override
 	public ReadOrder readOrderFactory() {
 		ReadOrderImpl delegate = new ReadOrderImpl();
-		delegate.setEm(em);
+		delegate.setEm(this.getEm());
 		return delegate;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.babel.order.rest.OrderFactory#saveOrderFactory()
+	 */
+	@Override
 	public SaveOrder saveOrderFactory() {
-		SaveOrderImpl delegate = new SaveOrderImpl();
-		delegate.setEm(em);
+		//we need the transaction aware implementation here
+		SaveOrderImpl delegate = new SaveOrderTA();
+		delegate.setEm(this.getEm());
 		return delegate;
 	}
 }
