@@ -19,6 +19,15 @@ public class TestNewOrderTopic {
 	public void init() {
 		this.esb = new BabelGatewayImpl();
 		((BabelGatewayImpl) this.esb).init();
+
+		// URLClassLoader classLoader =
+		// (URLClassLoader)TestApproveOrder.class.getClassLoader();
+		// System.out.println(Arrays.toString(classLoader.getURLs()));
+		// IMPORTANT!!! when using JBoss4.2, delete
+		// server/default/lib/spring2.5.jar
+		// and replace it with the Spring version used in this project
+		// (e.g. Spring-core-3.1.3-RELEASE.jar (from .m2/org/springfraemwork)
+
 	}
 
 	@Test
