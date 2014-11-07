@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:ws="http://www.springframework.org/schema/integration/ws"
+	xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/integration/stream 
+			http://www.springframework.org/schema/integration/stream/spring-integration-stream-2.2.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration-2.2.xsd
+			http://www.springframework.org/schema/integration/jms
+			http://www.springframework.org/schema/integration/jms/spring-integration-jms-2.2.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+			http://www.springframework.org/schema/integration/ws
+			http://www.springframework.org/schema/integration/ws/spring-integration-ws-2.2.xsd">
+
+
+
+	<int:chain input-channel="createOrderProcessData-request" 
+				output-channel="responseAggregator-channel">
+        <int:transformer ref="approveOrderResponseTransformer" method="aggregateOrderProcessData"/>
+        <int:service-activator ref="createOrderProcessDataService"
+			method="createOrderProcessInfo" />	 	
+    </int:chain>
+    
+	<int:chain input-channel="responseAggregator-channel">
+        <int:aggregator/>
+        <int:transformer ref="approveOrderResponseTransformer" method="aggregateResponse"/>
+       <int:recipient-list-router 
+		        timeout="30"
+		        ignore-send-failures="false"
+		        apply-sequence="true">
+		 <int:recipient channel="updateOrder-request"/>
+		 <int:recipient channel="finalResponseAggregator-channel"/>
+		</int:recipient-list-router>	
+    </int:chain>
+    
+    <int:chain id="updateOrder" input-channel="updateOrder-request" 
+				output-channel="finalResponseAggregator-channel">
+        <int:transformer expression="payload.order"/>
+        <int:service-activator ref="saveOrderService"
+			method="saveOrder" />	 	
+    </int:chain>
+    
+    <int:chain input-channel="finalResponseAggregator-channel">
+        <int:aggregator/>
+        <int:transformer ref="approveOrderResponseTransformer" method="aggregateFinalResponse"/>
+       	
+    </int:chain>
+	
+
+
+</beans>

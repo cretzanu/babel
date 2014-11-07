@@ -22,7 +22,7 @@ public class OrderLine extends PersistentEntity {
 	private String item;
 	 @ManyToOne 
 	 @JsonBackReference//("orderLines")
-	 @XmlTransient //avoid JAXB parser cycles
+	// @XmlTransient //avoid JAXB parser cycles
 	private Order order;
 	private double price;
 	private double quantity;

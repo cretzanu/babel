@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:ws="http://www.springframework.org/schema/integration/ws"
+	xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/integration/stream 
+			http://www.springframework.org/schema/integration/stream/spring-integration-stream-2.2.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration-2.2.xsd
+			http://www.springframework.org/schema/integration/jms
+			http://www.springframework.org/schema/integration/jms/spring-integration-jms-2.2.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+			http://www.springframework.org/schema/integration/ws
+			http://www.springframework.org/schema/integration/ws/spring-integration-ws-2.2.xsd">
+
+
+
+
+	
+	<int:chain input-channel="createInvoiceFromOrder-request"
+		output-channel="processDataAggregator-channel">
+		<int:transformer ref="orderToInvoiceTransformer" method="transform"></int:transformer>
+		<int:service-activator ref="createInvoiceService"
+			method="createInvoice" />
+	</int:chain>
+	
+	<int:chain input-channel="createPPFromOrder-request"
+		output-channel="processDataAggregator-channel">
+		<int:transformer ref="orderToPPTransformer"></int:transformer>
+		<int:service-activator ref="createProductionPlanService"
+			method="createProductionPlan" />
+	</int:chain>
+	<int:channel id="processDataAggregator-channel">
+	 <int:interceptors>
+	 	<int:wire-tap channel="logChannel"/>
+     </int:interceptors>
+	</int:channel>
+	
+	<int:chain input-channel="processDataAggregator-channel" >
+        <int:aggregator/>
+        
+		 <int:recipient-list-router 
+		        timeout="30"
+		        ignore-send-failures="false"
+		        apply-sequence="true">
+		 <int:recipient channel="createOrderProcessData-request"/>
+		 <int:recipient channel="responseAggregator-channel"/>
+		</int:recipient-list-router>	
+    </int:chain>
+    
+	
+	
+    
+	
+	
+
+</beans>

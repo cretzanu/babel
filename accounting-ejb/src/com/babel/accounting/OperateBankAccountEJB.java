@@ -33,23 +33,18 @@ public class OperateBankAccountEJB implements OperateBankAccount {
 	@javax.persistence.PersistenceContext(unitName = "accounting-ejb")
 	private javax.persistence.EntityManager em;
 
-	public OperateBankAccountEJB() {
-	}
+	public OperateBankAccountEJB() {}
 
 	@javax.annotation.PostConstruct
 	public void init() {
 		this.delegate = new OperateBankAccountImpl();
 		((OperateBankAccountImpl) this.delegate).setEm(em);
 	}
-
 	@Override
 	public void debit(String accountIdentification, double amount) {
 		this.delegate.debit(accountIdentification, amount);
-
 	}
-
 	@Override
-	@TransactionAttribute(TransactionAttributeType.MANDATORY)
 	public void credit(String accountIdentification, double amount) {
 		this.delegate.credit(accountIdentification, amount);
 

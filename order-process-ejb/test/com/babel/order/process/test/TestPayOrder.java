@@ -12,30 +12,22 @@ import com.babel.order.process.PayOrder;
 
 public class TestPayOrder {
 	private static final long ORDER_ID = 7L;
-
 	PayOrder payOrderService;
 	ReadOrder readOrderService;
 	OperateBankAccount operateBankAccountService;
-
 	@Before
 	public void init() throws NamingException {
-		// lookup needs a JNDI name.
-		// With JBoss AS 4.x, the default naming is EARFileName/ejb name/remote
-		// (for remote access)
 		payOrderService = (PayOrder) new InitialContext()
 				.lookup("order-process-ear/PayOrderEJB/remote");
 		readOrderService = (ReadOrder) new InitialContext()
 				.lookup("orderEAR/ReadOrderEJB/remote");
 		operateBankAccountService = (OperateBankAccount) new InitialContext()
 				.lookup("accounting-ear/OperateBankAccountEJB/remote");
-
 	}
-
 	@Test
 	public void test() {
 		payOrderService.payOrder(readOrderService.readOrder(ORDER_ID));
 	}
-
 	@Test
 	public void testFailDirectAccess() {
 		// this should fail on Mandatory transaction attribute (cannot be called

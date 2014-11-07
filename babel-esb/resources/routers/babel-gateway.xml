@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:ws="http://www.springframework.org/schema/integration/ws"
+	xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/integration/stream 
+			http://www.springframework.org/schema/integration/stream/spring-integration-stream-2.2.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration-2.2.xsd
+			http://www.springframework.org/schema/integration/jms
+			http://www.springframework.org/schema/integration/jms/spring-integration-jms-2.2.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+			http://www.springframework.org/schema/integration/ws
+			http://www.springframework.org/schema/integration/ws/spring-integration-ws-2.2.xsd">
+
+
+
+	<int:gateway id="babelGateway" default-request-channel="babelESB"
+		service-interface="com.babel.esb.api.BabelGateway">
+	</int:gateway>
+
+	<int:payload-type-router id="message-router"
+		input-channel="babelESB">
+		<int:mapping type="com.babel.esb.api.ApproveOrderMessage"
+			channel="approveOrderMessage" />
+		<int:mapping type="com.babel.esb.api.OrderReceivedEvent"
+			channel="newOrdersTopic" />
+	</int:payload-type-router>
+
+
+	<int:chain id="initOrderProcess" input-channel="approveOrderMessage">
+
+		<int:transformer expression="payload.orderId" />
+		<int:service-activator ref="readOrderService"
+			method="readOrder" />
+		<int:recipient-list-router timeout="30"
+			ignore-send-failures="false" apply-sequence="true">
+			<int:recipient channel="createInvoiceFromOrder-request" />
+			<int:recipient channel="createPPFromOrder-request" />
+			<int:recipient channel="processDataAggregator-channel" />
+		</int:recipient-list-router>
+
+	</int:chain>
+
+	<int:channel id="logChannel" />
+	<int-stream:stdout-channel-adapter
+		channel="logChannel" append-newline="true" />
+		
+	<!--the errorChannel is created by default by SI -->
+	<int:service-activator input-channel="errorChannel"
+		ref="errorHandler" method="handleError" />
+
+	<bean id="approveOrderResponseTransformer"
+		class="com.babel.esb.transformer.ApproveOrderResponseTransformer" />
+	<bean id="orderToPPTransformer"
+		class="com.babel.esb.transformer.OrderToProductionPlanTransformer" />
+	<bean id="orderToInvoiceTransformer" class="com.babel.esb.transformer.OrderToInvoiceTransformer" />
+	<bean id="errorHandler" class="com.babel.esb.impl.ErrorHandler" />
+	<bean id="testHelper" class="com.babel.esb.impl.TestHelper" />
+
+
+</beans>

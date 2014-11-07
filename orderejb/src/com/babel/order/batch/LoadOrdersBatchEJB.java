@@ -22,24 +22,12 @@ public class LoadOrdersBatchEJB implements LoadOrdersBatch {
 	
 	@javax.annotation.PostConstruct
 	public void init() {
-		
 		this.loadOrdersDelegate = new LoadOrdersBatchImpl(createOrderDelegate);
-
 	}
-
 	@Override
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public void loadOrdersBatch(List<Order> orders) throws OrdersBatchException {
 		this.loadOrdersDelegate.loadOrdersBatch(orders);
 		
 	}
-	
-	// wrong impl: cannot achieve "load all you can" strategy
-//	@javax.annotation.PostConstruct
-//	public void init() {
-//		CreateOrderImpl c = new CreateOrderImpl();
-//		c.setEm(em);
-//		this.delegate = new LoadOrdersBatchImpl(c);
-//
-//	}
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:ws="http://www.springframework.org/schema/integration/ws"
+	xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/integration/stream 
+			http://www.springframework.org/schema/integration/stream/spring-integration-stream-2.2.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration-2.2.xsd
+			http://www.springframework.org/schema/integration/jms
+			http://www.springframework.org/schema/integration/jms/spring-integration-jms-2.2.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+			http://www.springframework.org/schema/integration/ws
+			http://www.springframework.org/schema/integration/ws/spring-integration-ws-2.2.xsd
+			http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+
+	<task:executor id="asynchChannel1" pool-size="10"
+		queue-capacity="10" rejection-policy="CALLER_RUNS" />
+	<int:publish-subscribe-channel id="newOrdersTopic"
+		task-executor="asynchChannel1" />
+
+	
+
+	<int:chain id ="processOrder" input-channel="newOrdersTopic">
+		<!-- THIS makes sense only in asynch calls. In synch calls the client thread 
+			will receive the error -->
+		<int:header-enricher>
+			<int:error-channel ref="errorChannel" />
+		</int:header-enricher>
+		<int:transformer expression="payload.order" />
+		<int:service-activator ref="createOrderService"
+			method="createOrder" />
+
+	</int:chain>
+	
+	<int:chain id ="acknEmail" input-channel="newOrdersTopic">
+		<!-- THIS makes sense only in asynch calls. In synch calls the client thread 
+			will receive the error -->
+		<int:header-enricher>
+			<int:error-channel ref="errorChannel" />
+		</int:header-enricher>
+		<int:transformer expression="payload.order" />
+		<int:service-activator ref="testHelper"
+			method="sendOrderReceivedAcknEmail" />
+
+	</int:chain>
+	<int:chain id ="alertEmail" input-channel="newOrdersTopic">
+		<!-- THIS makes sense only in asynch calls. In synch calls the client thread 
+			will receive the error -->
+		<int:header-enricher>
+			<int:error-channel ref="errorChannel" />
+		</int:header-enricher>
+		<int:transformer expression="payload.order" />
+		<int:service-activator ref="testHelper"
+			method="sendOrderReceivedAlertEmail" />
+
+	</int:chain>
+
+</beans>

@@ -63,6 +63,8 @@
               <groupId>com.babel</groupId>
               <artifactId>orderejb</artifactId>
             </ejbModule>
+             
+          
             <jarModule>
               <groupId>com.babel</groupId>
               <artifactId>order</artifactId>
@@ -101,19 +103,14 @@
 			<version>1.0.0</version>
 			<type>jar</type>
 		</dependency>
-		<dependency>
-			<groupId>com.babel</groupId>
-			<artifactId>order</artifactId>
-			<version>1.0</version>
-			<type>jar</type>
-			
-		</dependency>
+		
 		  <dependency>
 			<groupId>com.babel</groupId>
 			<artifactId>orderejb</artifactId>
 			<version>1.0</version>
 			<type>ejb</type>			
 		 </dependency>
+		 
 		 
 		    <dependency>
 			<groupId>com.babel</groupId>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:ws="http://www.springframework.org/schema/integration/ws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration-2.2.xsd
+			http://www.springframework.org/schema/integration/jms
+			http://www.springframework.org/schema/integration/jms/spring-integration-jms-2.2.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+			http://www.springframework.org/schema/integration/ws
+			http://www.springframework.org/schema/integration/ws/spring-integration-ws-2.2.xsd">
+	<!--  	
+	<bean id="orderTextToMessageTransformer" class=""/>
+	-->
+	
+	
+	
+	<jee:remote-slsb id="createOrderService"
+		lookup-home-on-startup="false" cache-home="false" jndi-name="orderEAR/CreateOrderEJB/remote"
+		business-interface="com.babel.order.CreateOrder"
+		resource-ref="false" refresh-home-on-connect-failure="true">
+		<jee:environment>
+				java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+				java.naming.provider.url=jnp://localhost:1099/
+				java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces
+			</jee:environment>
+			
+	</jee:remote-slsb>
+	
+	<jee:remote-slsb id="readOrderService"
+		lookup-home-on-startup="false" cache-home="false" jndi-name="orderEAR/ReadOrderEJB/remote"
+		business-interface="com.babel.order.ReadOrder"
+		resource-ref="false" refresh-home-on-connect-failure="true">
+		<jee:environment>
+				java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+				java.naming.provider.url=jnp://localhost:1099/
+				java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces
+			</jee:environment>
+	</jee:remote-slsb>
+	<jee:remote-slsb id="saveOrderService"
+		lookup-home-on-startup="false" cache-home="false" jndi-name="orderEAR/SaveOrderEJB/remote"
+		business-interface="com.babel.order.SaveOrder"
+		resource-ref="false" refresh-home-on-connect-failure="true">
+		<jee:environment>
+				java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+				java.naming.provider.url=jnp://localhost:1099/
+				java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces
+			</jee:environment>		
+	</jee:remote-slsb>
+	<jee:remote-slsb id="createInvoiceService"
+		lookup-home-on-startup="false" cache-home="false" jndi-name="accounting-ear/CreateInvoiceEJB/remote"
+		business-interface="com.babel.accounting.CreateInvoice"
+		resource-ref="false" refresh-home-on-connect-failure="true">	
+		<jee:environment>
+				java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+				java.naming.provider.url=jnp://localhost:1099/
+				java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces
+			</jee:environment>
+			
+	</jee:remote-slsb>
+	
+	<jee:remote-slsb id="createProductionPlanService"
+		lookup-home-on-startup="false" cache-home="false" jndi-name="production-ear/CreateProductionPlanEJB/remote"
+		business-interface="com.babel.production.CreateProductionPlan"
+		resource-ref="false" refresh-home-on-connect-failure="true">
+		<jee:environment>
+				java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+				java.naming.provider.url=jnp://localhost:1099/
+				java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces
+			</jee:environment>
+
+	</jee:remote-slsb>
+	
+	<jee:remote-slsb id="createOrderProcessDataService"
+		lookup-home-on-startup="false" cache-home="false" jndi-name="order-process-ear/CreateOrderProcessDataEJB/remote"
+		business-interface="com.babel.order.process.internal.CreateOrderProcessData"
+		resource-ref="false" refresh-home-on-connect-failure="true">
+		
+		<jee:environment>
+				java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+				java.naming.provider.url=jnp://localhost:1099/
+				java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces
+			</jee:environment>
+			
+	</jee:remote-slsb>
+	
+	
+</beans>
